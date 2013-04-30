@@ -8,11 +8,19 @@ ubuntu_version    = "Precise"
 
 y = YAML.load File.open ".chef/rackspace_secrets.yaml"
 
+
+def titlecase s
+  "%s%s" % [
+      s[0].upcase,
+      s[1..-1].downcase
+  ]
+end
+
 rackspace                 = OpenStruct.new
 rackspace.username        = y["username"]
 rackspace.api_key         = y["api_key"]
 rackspace.flavor          = /#{rackspace_flavour}/
-rackspace.image           = /#{ubuntu_version}/
+rackspace.image           = /#{titlecase(ubuntu_version)}/
 rackspace.public_key_path = "./.chef/id_rsa.pub"
 rackspace.endpoint        = "https://lon.servers.api.rackspacecloud.com/v2"
 rackspace.auth_url        = "lon.identity.api.rackspacecloud.com"
@@ -79,7 +87,9 @@ Vagrant.configure("2") do |config|
         when "rackspace"
           box = "dummy"
         else
-          box           = "precise64"
+          box           = "%s64" % [
+              ubuntu_version.downcase
+          ]
           full_hostname = "%s-%s" % [
               hostname,
               ENV["USER"]
@@ -87,6 +97,9 @@ Vagrant.configure("2") do |config|
       end
 
       config.vm.box      = box
+      config.vm.box_url = "http://files.vagrantup.com/%s.box" % [
+          box
+      ]
       config.vm.hostname = "%s-%s" % [
           hostname,
           index
