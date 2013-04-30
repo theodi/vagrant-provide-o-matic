@@ -120,5 +120,7 @@ and on Rackspace:
     [vague_01] Deleting server...
     
 All without any changes to the Vagrantfile
+
+This might be some actual Holy Grail stuff, or I might be about to dive into a terrifying rabbit hole. Time will tell...
     
 Next step: find out how to write a Vagrant plugin!
