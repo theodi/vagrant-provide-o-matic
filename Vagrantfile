@@ -6,7 +6,6 @@ hostname          = "vague"
 rackspace_flavour = "512MB"
 ubuntu_version    = "Precise"
 
-
 y = YAML.load File.open ".chef/rackspace_secrets.yaml"
 
 rackspace                 = OpenStruct.new
@@ -22,9 +21,10 @@ provider = "virtualbox"
 
 full_hostname = hostname
 
-if ARGV[1]
-  provider = ARGV[1]
+if ARGV[2]
+  provider = ARGV[2]
 end
+
 case provider
   when "rackspace"
     box = "dummy"
