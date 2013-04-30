@@ -48,8 +48,15 @@ def save_provider_files h
   end
 end
 
-if ARGV[2]
-  default_provider = ARGV[2]
+passed_provider = nil
+ARGV.each_index do |i|
+  if ARGV[i] == "--provider"
+     passed_provider = ARGV[i + 1]
+  end
+end
+
+if passed_provider
+  default_provider = passed_provider
   node_providers = {}
 else
   node_providers = load_provider_files
