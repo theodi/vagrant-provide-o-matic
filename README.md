@@ -89,6 +89,7 @@ and on Rackspace:
 
     vague_01                 active (rackspace)
     vague_02                 active (rackspace)
+    <snip>
 
     [sam@dirac:~/Github/vagrant-provide-o-matic] vagrant ssh vague_01
     Welcome to Ubuntu 12.04.2 LTS (GNU/Linux 3.2.0-38-virtual x86_64)
