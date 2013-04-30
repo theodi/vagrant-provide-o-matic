@@ -17,23 +17,42 @@ rackspace.public_key_path = "./.chef/id_rsa.pub"
 rackspace.endpoint        = "https://lon.servers.api.rackspacecloud.com/v2"
 rackspace.auth_url        = "lon.identity.api.rackspacecloud.com"
 
-provider = "virtualbox"
+default_provider = "virtualbox"
 
 full_hostname = hostname
 
-if ARGV[2]
-  provider = ARGV[2]
+def load_provider_files
+  h = {}
+
+  Dir.glob(".vagrant/machines/*/provider").each do |b|
+    bits       = b.split "/"
+    h[bits[2]] = File.read(b).strip
+  end
+
+  h
 end
 
-case provider
-  when "rackspace"
-    box = "dummy"
-  else
-    box           = "precise64"
-    full_hostname = "%s-%s" % [
-        hostname,
-        ENV["USER"]
-    ]
+def save_provider_files h
+  h.each_pair do |name, provider|
+#    puts "Recording provider for %s" % [
+#        name
+#    ]
+    File.open "%s/%s/%s/%s" % [
+        ".vagrant",
+        "machines",
+        name,
+        "provider"
+    ],        "w" do |f|
+      f.write provider
+    end
+  end
+end
+
+if ARGV[2]
+  default_provider = ARGV[2]
+  node_providers = {}
+else
+  node_providers = load_provider_files
 end
 
 Vagrant.configure("2") do |config|
@@ -46,6 +65,20 @@ Vagrant.configure("2") do |config|
     ]
 
     config.vm.define :"#{hostname}_#{index}" do |config|
+      node_providers["#{hostname}_#{index}"] ||= default_provider
+      provider                               = node_providers["#{hostname}_#{index}"]
+
+      case provider
+        when "rackspace"
+          box = "dummy"
+        else
+          box           = "precise64"
+          full_hostname = "%s-%s" % [
+              hostname,
+              ENV["USER"]
+          ]
+      end
+
       config.vm.box      = box
       config.vm.hostname = "%s-%s" % [
           hostname,
@@ -61,6 +94,7 @@ Vagrant.configure("2") do |config|
         rs.endpoint        = rackspace.endpoint
         rs.auth_url        = rackspace.auth_url
       end
+
 
       if provider == "rackspace"
         config.ssh.private_key_path = "./.chef/id_rsa"
@@ -84,4 +118,8 @@ Vagrant.configure("2") do |config|
 
     end
   end
+end
+
+at_exit do
+  save_provider_files node_providers
 end
