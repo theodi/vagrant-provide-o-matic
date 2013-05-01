@@ -20,7 +20,7 @@ module Vagrant
       end
 
       def finalize!
-        @provide_o_matic_config_file = File.expand_path "#{ENV['HOME']}/.chef/provide-o-matic.rb" if @provide_o_matic_config_file == UNSET_VALUE
+        @provide_o_matic_config_file = File.expand_path "#{ENV['HOME']}/.provide-o-matic/provide-o-matic.rb" if @provide_o_matic_config_file == UNSET_VALUE
       end
     end
   end

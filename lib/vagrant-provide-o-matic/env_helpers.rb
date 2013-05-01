@@ -1,6 +1,6 @@
 module Vagrant
-  module Butcher
-    module ProvideOMatic
+  module ProvideOMatic
+    module EnvHelpers
        def provide_o_matic_config_file(env)
         # Make sure that the default is set
         env[:machine].config.provide_o_matic.finalize!
