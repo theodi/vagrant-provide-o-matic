@@ -1,9 +1,11 @@
+Vagrant.require_plugin "vagrant-provide-o-matic"
+
 number_of_nodes = 1
 hostname = "vague"
 
 Vagrant.configure("2") do |config|
 #  config.butcher.knife_config_file = '.chef/knife.rb'
-  config.provide_o_matic.provide_o_matic_config_file = '.chef/provide_o_matic.rb'
+  config.provide_o_matic.provide_o_matic_config_file = '.provide-o-matic/provide-o-matic.rb'
 
   number_of_nodes.times do |n|
 
