@@ -8,12 +8,12 @@ describe Vagrant::ProvideOMatic::Config do
   end
 
   it "sets provide-o-matic.rb default path" do
-    subject.finalize!.should eql(File.expand_path("#{ENV['HOME']}/.chef/provide-o-matic.rb"))
+    subject.finalize!.should eql(File.expand_path("#{ENV['HOME']}/.provide-o-matic/provide-o-matic.rb"))
   end
 
   describe "#validate" do
     let(:env)     { double('env') }
-    let(:config)  { double('config', butcher: subject) }
+    let(:config)  { double('config', provide_o_matic: subject) }
     let(:machine) { double('machine', config: config, env: env) }
     let(:result)  { subject.validate(machine) }
 
