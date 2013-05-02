@@ -6,6 +6,7 @@ module Vagrant
 
         def initialize(app, env)
           @app = app
+          puts "*** derp ***"
         end
 
         def call(env)
