@@ -1,12 +1,43 @@
 module Vagrant
   module ProvideOMatic
     module Action
-      autoload :Derp, 'vagrant-provide-o-matic/action/derp'
+      autoload :BeforeUp, 'vagrant-provide-o-matic/action/before_up'
+      autoload :AfterUp, 'vagrant-provide-o-matic/action/after_up'
+      autoload :BeforeSsh, 'vagrant-provide-o-matic/action/before_ssh'
+      autoload :AfterDestroy, 'vagrant-provide-o-matic/action/after_destroy'
 
-      def self.derp
+#      def self.derp
+#        ::Vagrant::Action::Builder.new.tap do |b|
+#          b.use setup
+#          b.use Vagrant::ProvideOMatic::Action::Derp
+#        end
+#      end
+
+      def self.before_up
         ::Vagrant::Action::Builder.new.tap do |b|
           b.use setup
-          b.use Vagrant::ProvideOMatic::Action::Derp
+          b.use Vagrant::ProvideOMatic::Action::BeforeUp
+        end
+      end
+
+      def self.after_up
+        ::Vagrant::Action::Builder.new.tap do |b|
+          b.use setup
+          b.use Vagrant::ProvideOMatic::Action::AfterUp
+        end
+      end
+
+      def self.before_ssh
+        ::Vagrant::Action::Builder.new.tap do |b|
+          b.use setup
+          b.use Vagrant::ProvideOMatic::Action::BeforeSsh
+        end
+      end
+
+      def self.after_destroy
+        ::Vagrant::Action::Builder.new.tap do |b|
+          b.use setup
+          b.use Vagrant::ProvideOMatic::Action::AfterDestroy
         end
       end
 
