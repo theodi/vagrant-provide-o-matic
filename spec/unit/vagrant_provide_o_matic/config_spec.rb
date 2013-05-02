@@ -3,12 +3,12 @@ require 'spec_helper.rb'
 describe Vagrant::ProvideOMatic::Config do
   subject { described_class.new }
 
-  it "has the option to set provide-o-matic.rb path" do
+  it "has the option to set provide-o-matic.yml path" do
     subject.should respond_to(:provide_o_matic_config_file)
   end
 
-  it "sets provide-o-matic.rb default path" do
-    subject.finalize!.should eql(File.expand_path("#{ENV['HOME']}/.provide-o-matic/provide-o-matic.rb"))
+  it "sets provide-o-matic.yml default path" do
+    subject.finalize!.should eql(File.expand_path("#{ENV['HOME']}/.provide-o-matic/provide-o-matic.yml"))
   end
 
   describe "#validate" do
