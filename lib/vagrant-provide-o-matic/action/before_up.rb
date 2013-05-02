@@ -16,6 +16,8 @@ module Vagrant
 
           get_provider_specific_config env
 
+          puts env[:machine].provider_config.auth_url
+
           @app.call(env)
         end
       end
