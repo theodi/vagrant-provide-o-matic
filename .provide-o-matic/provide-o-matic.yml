@@ -1,0 +1,7 @@
+virtualbox:
+  ssh:
+    username: vagrant
+
+rackspace:
+  ssh:
+    username: root
