@@ -2,7 +2,7 @@ Vagrant.require_plugin "vagrant-provide-o-matic"
 Vagrant.require_plugin "vagrant-rackspace"
 
 number_of_nodes = 1
-hostname = "vague"
+hostname = "pencil"
 
 Vagrant.configure("2") do |config|
 #  config.butcher.knife_config_file = '.chef/knife.rb'
