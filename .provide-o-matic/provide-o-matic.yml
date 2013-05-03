@@ -1,7 +1,20 @@
-virtualbox:
-  ssh:
-    username: vagrant
-
 rackspace:
-  ssh:
-    username: root
+  config:
+    ssh:
+      username:         root
+      private_key_path: ./.chef/id_rsa
+    vm:
+      box: dummy
+
+  provider_config:
+
+    flavor:          !ruby/regexp /512MB/
+    image:           !ruby/regexp /Precise/
+    public_key_path: ./.chef/id_rsa.pub
+    endpoint:        https://lon.servers.api.rackspacecloud.com/v2
+    auth_url:        lon.identity.api.rackspacecloud.com
+
+virtualbox:
+  config:
+    vm:
+      box: precise64
