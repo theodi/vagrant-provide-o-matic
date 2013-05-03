@@ -10,11 +10,14 @@ module Vagrant
         end
 
         def call(env)
+          puts "WTF?"
           unless env[:provider]
             env[:provider] = get_provider_from_file || "virtualbox"
           end
 
           get_provider_specific_config env
+
+          puts env[:machine]
 
           @app.call(env)
         end

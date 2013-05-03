@@ -7,6 +7,7 @@ module Vagrant
         def initialize(app, env)
           @app          = app
           @machine_name = env[:machine].name
+          @env = env
         end
 
         def call(env)
@@ -15,8 +16,6 @@ module Vagrant
           end
 
           get_provider_specific_config env
-
-          puts env[:machine].provider_config.auth_url
 
           @app.call(env)
         end

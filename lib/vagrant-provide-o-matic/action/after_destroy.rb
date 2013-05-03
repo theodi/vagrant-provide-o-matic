@@ -9,6 +9,11 @@ module Vagrant
         end
 
         def call(env)
+          unless env[:provider]
+            env[:provider] = get_provider_from_file || "virtualbox"
+          end
+
+          get_provider_specific_config env
           remove_provider_file env
           @app.call(env)
         end
