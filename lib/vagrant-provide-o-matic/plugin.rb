@@ -12,6 +12,7 @@ module Vagrant
       end
 
       action_hook(:vagrant_provide_o_matic_destroy, :machine_action_destroy) do |hook|
+        hook.before(::Vagrant::Action::Builtin::ConfigValidate, Vagrant::ProvideOMatic::Action.before_destroy)
         hook.after(::Vagrant::Action::Builtin::ConfigValidate, Vagrant::ProvideOMatic::Action.after_destroy)
       end
 
@@ -19,6 +20,10 @@ module Vagrant
         hook.before(::Vagrant::Action::Builtin::ConfigValidate, Vagrant::ProvideOMatic::Action.before_ssh)
       end
 
+      action_hook(:vagrant_provide_o_matic_status, :machine_action_status) do |hook|
+        hook.before(::Vagrant::Action::Builtin::ConfigValidate, Vagrant::ProvideOMatic::Action.before_status)
+      end
+#
 #     action_hook(:vagrant_provide_o_matic_derp, :machine_action_halt) do |hook|
 #     end
 #
@@ -31,8 +36,7 @@ module Vagrant
 #     action_hook(:vagrant_provide_o_matic_derp, :machine_action_resume) do |hook|
 #     end
 #
-#     action_hook(:vagrant_provide_o_matic_derp, :machine_action_status) do |hook|
-#     end
+
 
       config("provide_o_matic") do
         Config
