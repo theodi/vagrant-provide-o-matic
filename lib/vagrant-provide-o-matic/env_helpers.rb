@@ -21,20 +21,24 @@ module Vagrant
       end
 
       def get_provider_specific_config env
-        y    = YAML.load File.open env[:machine].config.provide_o_matic.provide_o_matic_config_file
-        conf = y[env[:provider]]["config"]
-        if conf && conf.is_a?(Hash)
-          conf.each_pair do |section, values|
-            values.each_pair do |k, v|
-              env[:machine].config.send(section).send("#{k}=", v)
+        y = YAML.load File.open env[:machine].config.provide_o_matic.provide_o_matic_config_file
+
+        if y[env[:provider]]
+          z    = y[env[:provider]]
+          conf = z["config"]
+          if conf && conf.is_a?(Hash)
+            conf.each_pair do |section, values|
+              values.each_pair do |k, v|
+                env[:machine].config.send(section).send("#{k}=", v)
+              end
             end
           end
-        end
 
-        conf = y[env[:provider]]["provider_config"]
-        if conf && conf.is_a?(Hash)
-          conf.each_pair do |section, value|
-            env[:machine].provider_config.send("#{section}=", value)
+          conf = z["provider_config"]
+          if conf && conf.is_a?(Hash)
+            conf.each_pair do |section, value|
+              env[:machine].provider_config.send("#{section}=", value)
+            end
           end
         end
       end
